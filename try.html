@@ -1,0 +1,135 @@
+<!DOCTYPE html> 
+<html> 
+    <head> 
+        <meta charset="utf-8"/>
+        <style>
+            #display{
+                text-align:right;
+                width:98.5%;
+            }
+            input{
+                height:100%;
+                width:100%;
+                font-size:25px;
+                cursor:pointer;
+            }
+            table{
+                margin: 0 auto;
+                width:550px;
+                height:350px;
+            }
+            input[type="button"]:active {
+                background-color: green;
+            }
+            .error{
+                color: red;
+            }
+        </style>
+        <script type="text/javascript">
+            function input(string){
+                document.getElementById("display").value += string;
+            }
+
+            function calculate(label){
+                var string=document.getElementById("display");
+                var result;
+
+                try{
+                    result=eval(string.value);
+                }
+                catch{
+                    document.getElementById("display").value="非法输入";
+                    document.getElementById("display").classList.add("error");
+                    return;
+                }
+
+                document.getElementById("display").classList.remove("error");
+
+                switch(label){
+                    case "=":
+                        document.getElementById("display").value=result;
+                        return;
+                    case "sqrt":
+                        document.getElementById("display").value=Math.sqrt(result);
+                        return;
+                    case "1/x":
+                        document.getElementById("display").value=Math.pow(result,-1);
+                        return;
+                }
+            }
+
+            function backspace(){
+                var string=document.getElementById('display').value;
+                if(string==="非法输入"){
+                    document.getElementById("display").value="";
+                    document.getElementById("display").classList.remove("error");
+                }
+                else{
+                document.getElementById("display").value=string.substr(0,string.length-1);
+                }
+            }
+
+            function ce(){
+                document.getElementById("display").value="";
+                document.getElementById("display").classList.remove("error");
+            }
+
+            function sortnumber(){
+                var string=document.getElementById("display").value;
+                var tstring = string.split(",");
+                for (let g = 0; g < tstring.length-1; g++) {
+                    for (let h = 0; h < tstring.length-1; h++) {
+                        if (tstring[h] > tstring[h+1]) {
+                            [tstring[h],tstring[h+1]] = [tstring[h+1],tstring[h]];
+                        }
+                    }
+                }
+                document.getElementById("display").value=tstring;
+            }
+        </script>
+    </head> 
+<body>
+        <form>
+            <table>
+                <tr>
+                    <td colspan="5"><input type="text" id="display"/></td>
+                </tr>
+                <tr>
+                    <td><input type="button" value="←" onclick="backspace(this.value);"/></td>
+                    <td><input type="button" value="CE" onclick="ce();"/></td>
+                    <td><input type="button" value="(" onclick="input(this.value);"/></td>
+                    <td><input type="button" value=")" onclick="input(this.value);"/></td>
+                    <td><input type="button" value="sqrt" onclick="calculate(this.value);"/></td>
+                </tr>
+                <tr>
+                    <td><input type="button" value="7" onclick="input(this.value);"/></td>
+                    <td><input type="button" value="8" onclick="input(this.value);"/></td>
+                    <td><input type="button" value="9" onclick="input(this.value);"/></td>
+                    <td><input type="button" value="/" onclick="input(this.value);"/></td>
+                    <td><input type="button" value="%" onclick="input(this.value);"/></td>
+                </tr>
+                <tr>
+                    <td><input type="button" value="4" onclick="input(this.value);"/></td>
+                    <td><input type="button" value="5" onclick="input(this.value);"/></td>
+                    <td><input type="button" value="6" onclick="input(this.value);"/></td>
+                    <td><input type="button" value="*" onclick="input(this.value);"/></td>
+                    <td><input type="button" value="1/x" onclick="calculate(this.value);"/></td>
+                </tr>
+                <tr>
+                    <td><input type="button" value="1" onclick="input(this.value);"/></td>
+                    <td><input type="button" value="2" onclick="input(this.value);"/></td>
+                    <td><input type="button" value="3" onclick="input(this.value);"/></td>
+                    <td><input type="button" value="-" onclick="input(this.value);"/></td>
+                    <td><input type="button" value="=" onclick="calculate(this.value);"/></td>
+                </tr>
+                <tr>
+                    <td><input type="button" value="0" onclick="input(this.value);"/></td>
+                    <td><input type="button" value="." onclick="input(this.value);"/></td>
+                    <td><input type="button" value="," onclick="input(this.value);"/></td>
+                    <td><input type="button" value="+" onclick="input(this.value);"/></td>
+                    <td><input type="button" value="排序" onclick="sortnumber();"/></td>
+                </tr>
+            </table>
+        </form>
+    </body>
+</html> 
